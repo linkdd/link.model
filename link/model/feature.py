@@ -94,3 +94,9 @@ class Model(object):
 
     def __repr__(self):
         return 'Model(data_id={0})'.format(self[self.DATA_ID])
+
+    def save(self):
+        raise NotImplementedError()
+
+    def delete(self):
+        raise NotImplementedError()
