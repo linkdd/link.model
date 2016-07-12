@@ -3,7 +3,7 @@
 from b3j0f.conf import Configurable, category, Parameter
 from inspect import getmembers, isroutine
 
-from link.middleware.core import Middleware
+from link.middleware.core import Middleware, Feature
 from link.model import CONF_BASE_PATH
 
 
@@ -14,7 +14,7 @@ from link.model import CONF_BASE_PATH
         Parameter(name='schema_uri_template')
     )
 )
-class ModelFeature(object):
+class ModelFeature(Feature):
 
     name = 'model'
 
@@ -29,11 +29,20 @@ class ModelFeature(object):
 
     def __call__(self, schemaname):
         schema = self.resolve_schema(schemaname)
-        return self.create_model(schema)
+        model = self.create_model(schema)
+        return lambda **kwargs: model(self.middleware, **kwargs)
 
 
 class Model(object):
     DATA_ID = 'id'
+
+    def __init__(self, middleware, **kwargs):
+        super(Model, self).__init__()
+
+        self.middleware = middleware
+
+        for key in kwargs:
+            self[key] = kwargs[key]
 
     def __getitem__(self, attr):
         try:
