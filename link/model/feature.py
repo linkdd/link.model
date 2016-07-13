@@ -34,12 +34,12 @@ class ModelFeature(Feature):
 
 
 class Model(object):
-    DATA_ID = 'id'
+    _DATA_ID = 'id'
 
     def __init__(self, middleware, **kwargs):
         super(Model, self).__init__()
 
-        self.middleware = middleware
+        self._middleware = middleware
 
         for key in kwargs:
             self[key] = kwargs[key]
@@ -93,7 +93,7 @@ class Model(object):
         return str(d)
 
     def __repr__(self):
-        return 'Model(data_id={0})'.format(self[self.DATA_ID])
+        return 'Model(data_id={0})'.format(self[self._DATA_ID])
 
     def save(self):
         raise NotImplementedError()
