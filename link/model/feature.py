@@ -30,15 +30,16 @@ class ModelFeature(Feature):
     def __call__(self, schemaname):
         schema = self.resolve_schema(schemaname)
         model = self.create_model(schema)
-        return lambda **kwargs: model(self.middleware, **kwargs)
+        return lambda **kwargs: model(schemaname, self.middleware, **kwargs)
 
 
 class Model(object):
     _DATA_ID = 'id'
 
-    def __init__(self, middleware, **kwargs):
+    def __init__(self, schemaname, middleware, **kwargs):
         super(Model, self).__init__()
 
+        self._schemaname = schemaname
         self._middleware = middleware
 
         for key in kwargs:
