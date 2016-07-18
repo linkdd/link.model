@@ -3,7 +3,9 @@
 from b3j0f.conf import Configurable, category, Parameter
 from inspect import getmembers, isroutine
 
-from link.middleware.core import Middleware, Feature
+from link.middleware.core import Middleware
+from link.feature import Feature
+
 from link.model import CONF_BASE_PATH
 
 
